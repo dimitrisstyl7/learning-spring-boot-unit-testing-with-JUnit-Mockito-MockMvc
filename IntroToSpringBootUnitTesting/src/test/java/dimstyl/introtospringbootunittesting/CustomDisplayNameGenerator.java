@@ -1,0 +1,42 @@
+package dimstyl.introtospringbootunittesting;
+
+import org.junit.jupiter.api.DisplayNameGenerator;
+
+import java.lang.reflect.Method;
+
+class CustomDisplayNameGenerator {
+
+    static class ReplaceCamelCase extends DisplayNameGenerator.ReplaceUnderscores {
+
+        @Override
+        public String generateDisplayNameForClass(Class<?> testClass) {
+            return replaceCamelCase(super.generateDisplayNameForClass(testClass));
+        }
+
+        @Override
+        public String generateDisplayNameForNestedClass(Class<?> nestedClass) {
+            return replaceCamelCase(super.generateDisplayNameForNestedClass(nestedClass));
+        }
+
+        @Override
+        public String generateDisplayNameForMethod(Class<?> testClass, Method testMethod) {
+            return replaceCamelCase(super.generateDisplayNameForMethod(testClass, testMethod));
+        }
+
+        private String replaceCamelCase(String camelCase) {
+            StringBuilder result = new StringBuilder();
+            result.append(camelCase.charAt(0));
+            for (int i = 1; i < camelCase.length(); i++) {
+                if (Character.isUpperCase(camelCase.charAt(i))) {
+                    result.append(' ');
+                    result.append(Character.toLowerCase(camelCase.charAt(i)));
+                } else {
+                    result.append(camelCase.charAt(i));
+                }
+            }
+            return result.toString();
+        }
+
+    }
+
+}

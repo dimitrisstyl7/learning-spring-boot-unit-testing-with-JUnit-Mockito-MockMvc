@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: IntroToSpringBootUnitTesting
+
+info:
+  app:
+    name: GradeBook
+    description: Track student grades
+    version: 1.0.0
