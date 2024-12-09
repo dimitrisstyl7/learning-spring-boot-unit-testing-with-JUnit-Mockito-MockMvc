@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayNameGeneration(CustomDisplayNameGeneration.ReplaceCamelCase.class)
+@DisplayNameGeneration(CustomDisplayNameGenerator.ReplaceCamelCase.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FizzBuzzTest {
 
