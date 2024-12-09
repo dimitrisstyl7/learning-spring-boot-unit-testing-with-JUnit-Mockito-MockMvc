@@ -50,7 +50,7 @@ class IntroToSpringBootUnitTestingApplicationTests {
     void calculateGradesSum_ShouldReturnExpectedSum() {
         double expectedValue = 353.25;
         double actualValue = student.getStudentGrades().calculateGradesSum();
-        Assertions.assertEquals(expectedValue, actualValue, "should return expected sum");
+        Assertions.assertEquals(expectedValue, actualValue, "failure - should return expected sum");
     }
 
     @Test
