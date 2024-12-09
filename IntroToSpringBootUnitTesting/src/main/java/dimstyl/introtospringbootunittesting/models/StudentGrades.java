@@ -30,7 +30,6 @@ public class StudentGrades {
         BigDecimal resultRound = BigDecimal.valueOf(result);
         resultRound = resultRound.setScale(2, RoundingMode.HALF_UP);
         return resultRound.doubleValue();
-
     }
 
     static public Boolean isGradeGreater(double gradeOne, double gradeTwo) {
