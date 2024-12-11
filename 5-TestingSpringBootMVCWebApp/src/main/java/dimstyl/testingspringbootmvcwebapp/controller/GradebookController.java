@@ -57,7 +57,7 @@ public class GradebookController {
         Grade newGrade = switch (gradeType) {
             case GradeType.math -> new MathGrade(studentId, grade);
             case GradeType.history -> new HistoryGrade(studentId, grade);
-            case science -> new ScienceGrade(studentId, grade);
+            case GradeType.science -> new ScienceGrade(studentId, grade);
         };
 
         if (!studentAndGradeService.addGrade(newGrade)) return "error";
