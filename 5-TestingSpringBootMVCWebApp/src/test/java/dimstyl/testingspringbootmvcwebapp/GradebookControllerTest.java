@@ -84,7 +84,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void deleteStudentEndpoint_WhenStudentExists_ShouldDeleteAndReturnIndexPage() throws Exception {
+    void deleteStudentEndpoint_WhenStudentExists_ShouldDeleteStudentAndReturnIndexPage() throws Exception {
         Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(true);
         Mockito.doNothing().when(studentAndGradeService).deleteStudent(student.getId());
 
@@ -102,23 +102,25 @@ class GradebookControllerTest {
 
     @Test
     void deleteStudentEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
-        Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
-        Mockito.doNothing().when(studentAndGradeService).deleteStudent(student.getId());
+        int studentId = 0;
+
+        Mockito.when(studentAndGradeService.isStudentPresent(studentId)).thenReturn(false);
+        Mockito.doNothing().when(studentAndGradeService).deleteStudent(studentId);
 
         MvcResult mvcResult = mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/delete/student/{id}", student.getId()))
+                                .get("/delete/student/{id}", studentId))
                 .andExpect(status().isOk())
                 .andReturn();
 
         ModelAndView modelAndView = mvcResult.getModelAndView();
         Assertions.assertNotNull(modelAndView, "failure - modelAndView should not be null");
         ModelAndViewAssert.assertViewName(modelAndView, "error");
-        Mockito.verify(studentAndGradeService, Mockito.never()).deleteStudent(student.getId());
+        Mockito.verify(studentAndGradeService, Mockito.never()).deleteStudent(studentId);
     }
 
     @Test
-    void getStudentInformationEndpoint_WhenStudentExists_ShouldReturnStudentInformationPageWithStudentInformation() throws Exception {
+    void getStudentInformationEndpoint_WhenStudentExists_ShouldReturnStudentInformationPage() throws Exception {
         GradebookCollegeStudent gradebookCollegeStudent = new GradebookCollegeStudent(
                 student.getId(), student.getFirstName(),
                 student.getLastName(), student.getEmailAddress(),
@@ -139,16 +141,18 @@ class GradebookControllerTest {
 
     @Test
     void getStudentInformationEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
-        Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
+        int studentId = 0;
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/studentInformation/{id}", student.getId()))
+        Mockito.when(studentAndGradeService.isStudentPresent(studentId)).thenReturn(false);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/studentInformation/{id}", studentId))
                 .andExpect(status().isOk())
                 .andReturn();
 
         ModelAndView modelAndView = mvcResult.getModelAndView();
         Assertions.assertNotNull(modelAndView, "failure - modelAndView should not be null");
         ModelAndViewAssert.assertViewName(modelAndView, "error");
-        Mockito.verify(studentAndGradeService, Mockito.never()).getStudentInformation(student.getId());
+        Mockito.verify(studentAndGradeService, Mockito.never()).getStudentInformation(studentId);
     }
 
     @Test
@@ -182,7 +186,9 @@ class GradebookControllerTest {
 
     @Test
     void addGradeEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
-        Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
+        int studentId = 0;
+
+        Mockito.when(studentAndGradeService.isStudentPresent(studentId)).thenReturn(false);
 
         MvcResult mvcResult = mockMvc.perform(
                         MockMvcRequestBuilders
@@ -190,7 +196,7 @@ class GradebookControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .param("grade", "85.0")
                                 .param("gradeType", GradeType.math.name())
-                                .param("studentId", String.valueOf(student.getId())))
+                                .param("studentId", String.valueOf(studentId)))
                 .andExpect(status().isOk())
                 .andReturn();
 
