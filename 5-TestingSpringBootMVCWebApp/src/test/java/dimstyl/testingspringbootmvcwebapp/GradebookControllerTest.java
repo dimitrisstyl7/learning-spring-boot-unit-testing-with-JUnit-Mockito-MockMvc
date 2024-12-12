@@ -41,7 +41,7 @@ class GradebookControllerTest {
     private StudentAndGradeService studentAndGradeService;
 
     @Test
-    void getStudents_ShouldReturnIndexPageWithAllStudents() throws Exception {
+    void getStudentsEndpoint_ShouldReturnIndexPageWithAllStudents() throws Exception {
         CollegeStudent studentOne =
                 new GradebookCollegeStudent("Alice", "White", "alice.white@email.com");
         CollegeStudent studentTwo =
@@ -60,7 +60,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void createStudent_ShouldSaveStudentAndReturnIndexPage() throws Exception {
+    void createStudentEndpoint_ShouldSaveStudentAndReturnIndexPage() throws Exception {
         CollegeStudent savedStudent = new CollegeStudent(
                 student.getFirstName(), student.getLastName(), student.getEmailAddress()
         );
@@ -84,7 +84,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void deleteStudent_WhenStudentExists_ShouldDeleteAndReturnIndexPage() throws Exception {
+    void deleteStudentEndpoint_WhenStudentExists_ShouldDeleteAndReturnIndexPage() throws Exception {
         Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(true);
         Mockito.doNothing().when(studentAndGradeService).deleteStudent(student.getId());
 
@@ -101,7 +101,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void deleteStudent_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
+    void deleteStudentEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
         Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
         Mockito.doNothing().when(studentAndGradeService).deleteStudent(student.getId());
 
@@ -118,7 +118,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void getStudentInformation_WhenStudentExists_ShouldReturnStudentInformationPageWithStudentInformation() throws Exception {
+    void getStudentInformationEndpoint_WhenStudentExists_ShouldReturnStudentInformationPageWithStudentInformation() throws Exception {
         GradebookCollegeStudent gradebookCollegeStudent = new GradebookCollegeStudent(
                 student.getId(), student.getFirstName(),
                 student.getLastName(), student.getEmailAddress(),
@@ -138,7 +138,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void getStudentInformation_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
+    void getStudentInformationEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
         Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/studentInformation/{id}", student.getId()))
@@ -152,7 +152,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void addGrade_WhenStudentExists_ShouldSaveGradeAndReturnStudentInformationPage() throws Exception {
+    void addGradeEndpoint_WhenStudentExists_ShouldSaveGradeAndReturnStudentInformationPage() throws Exception {
         Grade grade = new MathGrade(student.getId(), 85.0);
         GradebookCollegeStudent gradebookCollegeStudent = new GradebookCollegeStudent(
                 student.getId(), student.getFirstName(),
@@ -181,7 +181,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void addGrade_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
+    void addGradeEndpoint_WhenStudentDoesNotExist_ShouldReturnErrorPage() throws Exception {
         Mockito.when(studentAndGradeService.isStudentPresent(student.getId())).thenReturn(false);
 
         MvcResult mvcResult = mockMvc.perform(
@@ -201,7 +201,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void deleteGrade_WhenGradeIdIsValid_ShouldDeleteGradeAndReturnStudentInformationPage() throws Exception {
+    void deleteGradeEndpoint_WhenGradeIdIsValid_ShouldDeleteGradeAndReturnStudentInformationPage() throws Exception {
         int gradeId = 1;
         GradeType gradeType = GradeType.math;
         GradebookCollegeStudent gradebookCollegeStudent = new GradebookCollegeStudent(
@@ -226,7 +226,7 @@ class GradebookControllerTest {
     }
 
     @Test
-    void deleteGrade_WhenGradeIdIsNotValid_ShouldReturnErrorPage() throws Exception {
+    void deleteGradeEndpoint_WhenGradeIdIsNotValid_ShouldReturnErrorPage() throws Exception {
         int gradeId = 1000;
         GradeType gradeType = GradeType.math;
 
