@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: TestingSpringBootMVCWebApp
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:test_db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  sql:
+    init:
+      mode: always
+  h2:
+    console:
+      enabled: true
+
+define:
+  student:
+    id: 10
+    first-name: "'John'"
+    last-name: "'Doe'"
+    email-address: "'john.doe@email.com'"
+
+sql:
+  script:
+    create:
+      student: insert into student(id, first_name, last_name, email_address) values (${define.student.id}, ${define.student.first-name}, ${define.student.last-name}, ${define.student.email-address})
+      math:
+        grade: insert into math_grade(id, student_id, grade) values (10, ${define.student.id}, 100.00)
+      history:
+        grade: insert into history_grade(id, student_id, grade) values (10, ${define.student.id}, 100.00)
+      science:
+        grade: insert into science_grade(id, student_id, grade) values (10, ${define.student.id}, 100.00)
+    delete:
+      student: delete from student
+      math:
+        grade: delete from math_grade
+      history:
+        grade: delete from history_grade
+      science:
+        grade: delete from science_grade
+
+info:
+  app:
+    name: GradeBook
+    description: Track student grades
+    version: 1.0.0
